@@ -4,4 +4,4 @@ while True:
     time.sleep(180)
     rawString = arduino.readline()
     print(rawString)
-arduino.close()j
+arduino.close()
