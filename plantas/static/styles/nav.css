@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: 10px;
+
+}
+
+.caja{
+    width: 15rem;
+    margin: auto;    
+    border: 1px solid grey;
+    padding: 1rem;
+}
