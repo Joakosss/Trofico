@@ -13,5 +13,8 @@ def index(request):
     return render (request, 'index.html', {
         'plantas' : plantas,
         'registros' : registros
-
     })
+
+
+def login(request):
+    return render(request, 'login.html')

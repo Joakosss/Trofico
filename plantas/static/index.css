@@ -1,4 +1,5 @@
 .container{
+    margin-top: 20px;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -8,12 +9,10 @@
 
 .caja{
     width: 15rem;
+    height: 591px;
     margin: auto;    
     border: 1px solid grey;
     padding: 1rem;
 }
 
-body{
 
-    background-color: black;
-}
