@@ -11,8 +11,31 @@
     width: 15rem;
     height: 591px;
     margin: auto;    
-    border: 1px solid grey;
     padding: 1rem;
+    background-color: white;
+    border-radius: 7px;
 }
 
+body{
+    background-color: #E6E6DC;
+}
 
+.letraBlanca{
+    color: #E6E6DC;
+}
+
+.color2{
+    background-color: #518354;
+}
+.color3{
+    background-color: #688A87;
+}
+
+.color4{
+    background-color: #1F2722;
+}
+
+.loginDiv{
+    background-color: white;
+    border-radius: 10px;
+}

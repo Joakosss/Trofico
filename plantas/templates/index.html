@@ -1,4 +1,8 @@
 {% extends 'nav.html' %}
+{% load static %}
+    {% block styles %}
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    {% endblock styles %}
 
     {% block titulo %}
     <title>Trofico</title>
@@ -9,7 +13,7 @@
 
     <div class="container">
         {% for x in plantas %}
-        <div class="caja">
+        <div class="caja shadow p-3 mb-5 bg-body rounded-3">
             
             <h2>{{ x.nombre }}</h1>
             <h3>Descripcion:</h3>
@@ -22,6 +26,7 @@
                     <p>Humedad: {{i.humedad}}</p>
                     {% endif %}
                 {% endfor %}
+            <button class="btn btn-secondary">Editar</button>
             
         </div>
         {% endfor %}

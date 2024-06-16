@@ -1,0 +1,41 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+{% endblock styles %}
+{% block titulo %}
+<title>Añadir Planta - Trófico</title>
+{% endblock titulo %}
+
+
+{% block content %}
+<div class="container-fluid m-4 d-flex justify-content-center">
+    <form class="rounded-3 shadow border p-3 form loginDiv w-50" action="{% url 'PLANTAS' %}" method="post">
+        <div>
+            <h1>Agregar Planta</h1>
+        </div>
+        <div class="mb-3">
+        <label for="" class="form-label">Nombre Planta</label>
+        <input name="txtNombrePlanta" type="text" class="form-control" placeholder="Ingrese nombre de la planta">
+        </div>
+        <div class="mb-3">
+        <label for="" class="form-label">Ubicación</label>
+        <input name="txtUbicacion" type="text" class="form-control" placeholder="Ingrese ubicación">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Humedad mínima y máxima</label>
+            <input name="numMin" type="number" class="form-control" placeholder="Humedad min">
+            <input name="numMax" type="number" class="form-control" placeholder="Humedad max">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Descripción</label>
+            <textarea name="txtaDescripcion" id="" class="form-control" rows="3"></textarea>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Agregar</button>
+        <h1>{{msg}}</h1>
+        {% csrf_token %}
+    </form>
+</div>
+{% endblock content %}
