@@ -13,7 +13,7 @@ def index(request):
     registros = registro.objects.all()
     ser = serial.Serial("COM4", 9600)
     datos = ser.readline().decode().strip()
-    datos2 = round((int(datos)*50)/512)
+    datos2 = round(100-((datos/1024)*100))
     ser.close()
 
     bool = False
