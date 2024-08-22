@@ -11,11 +11,43 @@
 
     {% block content %}
 
+{% comment %}     
+    <section class="container">
+        <article class="caja ">
+            <header class="" style="background-image: url('{% static 'img/planta.webp' %}');">
+                <h2>{{ x.nombre }}</h1>
+            </header>
+        </article>
+    </section>
+ {% endcomment %}
+
+
+
+
     <div class="container">
         {% for x in plantas %}
-        <div class="caja shadow p-3 mb-5 bg-body rounded-3">
-            
-            <h2>{{ x.nombre }}</h1>
+
+        <article class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'img/planta.webp' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ x.nombre }}</h5>
+              <p class="card-text">{{x.ubicacion}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+            {% for i in registros|slice:"0:6" %}
+            {% if i.planta_id == x.id %}
+              <li class="list-group-item">{{i.fecha}} {{i.humedad}}°c</li>
+            {% endif %}
+            {% endfor %}
+            </ul>
+        </article>
+
+        
+        {% comment %} 
+        <article class="caja shadow p-3 mb-5 bg-body rounded-3">
+            <header class="pb-5" style="background-image: url('{% static 'img/planta.webp' %}');">
+                <h2>{{ x.nombre }}</h1>
+            </header>
             <h3>Descripcion:</h3>
             <p>{{x.descripcion}}</p>
             <h3>Ubicación: {{x.ubicacion}}</h3>
@@ -27,8 +59,9 @@
                     {% endif %}
                 {% endfor %}
             <button class="btn btn-secondary">Editar</button>
-            
-        </div>
+
+        </article>
+{% endcomment %}
         {% endfor %}
     </div>
     {% endblock content %}
