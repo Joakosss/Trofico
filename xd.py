@@ -1,7 +1,9 @@
 import serial, time
-arduino = serial.Serial('COM4', 9600)
+
+arduino = serial.Serial('COM1', 9600)
+
 while True:
-    time.sleep(180)
+    time.sleep(5)
     rawString = arduino.readline()
     print(rawString)
 arduino.close()

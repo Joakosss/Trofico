@@ -4,16 +4,31 @@ from . models import planta, registro
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as login_autent
 from django.contrib.auth.decorators import login_required
+import serial
 # Create your views here.
 
 @login_required(login_url='/login')
 def index(request):
     plantas=planta.objects.all()
     registros = registro.objects.all()
+    ser = serial.Serial("COM4", 9600)
+    datos = ser.readline().decode().strip()
+    datos2 = round((int(datos)*50)/512)
+    ser.close()
+
+    bool = False
+
+    if int(datos)> 1000:
+        bool = True
+
 
     return render (request, 'index.html', {
         'plantas' : plantas,
-        'registros' : registros
+        'registros' : registros,
+        'datos' : datos,
+        'datos2' : datos2,
+
+        'bool' : bool
     })
 
 def logout_vista(request):

@@ -32,6 +32,13 @@
             <div class="card-body">
               <h5 class="card-title">{{ x.nombre }}</h5>
               <p class="card-text">{{x.ubicacion}}</p>
+                {% if bool %}
+                    <p>Falta riego</p>
+                {% else %}
+                    <p>No necesita riego c:</p>
+                {% endif %}
+              <p class="card-text"> {{datos}} {{datos2}}% Seco</p>
+                
             </div>
             <ul class="list-group list-group-flush">
             {% for i in registros|slice:"0:6" %}
