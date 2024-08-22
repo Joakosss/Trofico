@@ -10,11 +10,11 @@
 .caja{
     width: 15rem;
     height: 591px;
-    margin: auto;    
-    padding: 1rem;
+    padding: 0rem !important;   
     background-color: white;
-    border-radius: 7px;
+    
 }
+
 
 body{
     background-color: #E6E6DC;
