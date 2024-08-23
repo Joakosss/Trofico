@@ -8,7 +8,7 @@
 }
 
 .caja{
-    width: 15rem;
+    /* width: 15rem; */
     height: 591px;
     padding: 0rem !important;   
     background-color: white;
@@ -38,4 +38,8 @@ body{
 .loginDiv{
     background-color: white;
     border-radius: 10px;
+}
+.article-planta{
+    display: flex;
+
 }

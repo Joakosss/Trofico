@@ -13,8 +13,12 @@ def index(request):
     registros = registro.objects.all()
     ser = serial.Serial("COM4", 9600)
     datos = ser.readline().decode().strip()
-    datos2 = round(100-((datos/1024)*100))
+    datos2 = round(100-((int(datos)/1024)*100))
     ser.close()
+
+    # Guardar en la base de datos
+    registro.objects.create(planta=planta.objects.get(id=15),
+                            humedad=datos2)
 
     bool = False
 

@@ -28,25 +28,33 @@
         {% for x in plantas %}
 
         <article class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% static 'img/planta.webp' %}" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{ x.nombre }}</h5>
-              <p class="card-text">{{x.ubicacion}}</p>
-                {% if bool %}
-                    <p>Falta riego</p>
-                {% else %}
-                    <p>No necesita riego c:</p>
-                {% endif %}
-              <p class="card-text"> {{datos}} {{datos2}}% Seco</p>
-                
+            <div class="article-planta">
+                <img class="card-img-top" src="{% static 'img/planta.webp' %}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{ x.nombre }}</h5>
+                  <p class="card-text">{{x.ubicacion}}</p>
+                    {% if bool %}
+                        <p>Falta riego</p>
+                    {% else %}
+                        <p>No necesita riego c:</p>
+                    {% endif %}
+                    <hr>
+                  <p class="card-text"> <strong>Humedad:</strong> {{datos2}}% </p>
+                    
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-            {% for i in registros|slice:"0:6" %}
-            {% if i.planta_id == x.id %}
-              <li class="list-group-item">{{i.fecha}} {{i.humedad}}°c</li>
-            {% endif %}
-            {% endfor %}
-            </ul>
+            <div class="article-planta">
+                <ul class="list-group list-group-flush">
+                {% for i in registros|slice:"-1:" %}
+                {% if i.planta_id == x.id %}
+                  <li class="list-group-item">{{i.fecha}} {{i.humedad}}%</li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="article-planta">
+                {% comment %} Aqui va el gráfico {% endcomment %}
+            </div>
         </article>
 
         
