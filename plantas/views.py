@@ -1,17 +1,23 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from . models import planta, registro
+from . models import planta, registro, r_ambiente
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as login_autent
 from django.contrib.auth.decorators import login_required
 import serial
+from rest_framework import viewsets
+from .serializer import registroSerializer
 # Create your views here.
+
+class registroViewSet(viewsets.ModelViewSet):
+    queryset = r_ambiente.objects.all()
+    serializer_class = registroSerializer
 
 @login_required(login_url='/login')
 def index(request):
     plantas=planta.objects.all()
     registros = registro.objects.all()
-    ser = serial.Serial("COM4", 9600)
+    """ser = serial.Serial("COM4", 9600)
     datos = ser.readline().decode().strip()
     datos2 = round(100-((int(datos)/1024)*100))
     ser.close()
@@ -24,15 +30,15 @@ def index(request):
 
     if int(datos)> 1000:
         bool = True
-
+    """
 
     return render (request, 'index.html', {
         'plantas' : plantas,
         'registros' : registros,
-        'datos' : datos,
-        'datos2' : datos2,
+        #'datos' : datos,
+        #'datos2' : datos2,
 
-        'bool' : bool
+        #'bool' : bool
     })
 
 def logout_vista(request):

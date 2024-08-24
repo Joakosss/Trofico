@@ -23,4 +23,8 @@ class registro (models.Model):
     def __str__(self):
         return self.planta.nombre
         """ return self.fecha.strftime("%d/%m/%Y , %H:%M:%S"+ " " +self.planta.nombre) """
-    
+
+class r_ambiente (models.Model):
+    planta = models.ForeignKey(planta, on_delete=models.CASCADE)
+    relativa = models.IntegerField()
+    temperatura = models.IntegerField()
