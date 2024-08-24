@@ -5,6 +5,9 @@ from . models import planta, registro
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as login_autent
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+from .serializer import registroSerializer
+import serial
 # Create your views here.
 
 
@@ -23,14 +26,39 @@ def get_grafico(request):
 
     
 
+
+class registroViewSet(viewsets.ModelViewSet):
+    queryset = r_ambiente.objects.all()
+    serializer_class = registroSerializer
+
 @login_required(login_url='/login')
 def index(request):
     plantas=planta.objects.all()
+
     registros = registro.objects.all().order_by('-fecha')[:6]
+
+    registros = registro.objects.all()
+    """ser = serial.Serial("COM4", 9600)
+    datos = ser.readline().decode().strip()
+    datos2 = round(100-((int(datos)/1024)*100))
+    ser.close()
+
+    # Guardar en la base de datos
+    registro.objects.create(planta=planta.objects.get(id=15),
+                            humedad=datos2)
+
+    bool = False
+
+    if int(datos)> 1000:
+        bool = True
+    """
 
     return render (request, 'index.html', {
         'plantas' : plantas,
         'registros' : registros,
+        #'datos' : datos,
+        #'datos2' : datos2,
+        #'bool' : bool
     })
 
 def logout_vista(request):
