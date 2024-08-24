@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import r_ambiente
+from .models import registro
 
 class registroSerializer(serializers.ModelSerializer):
     class Meta:
-        model=r_ambiente
+        model= registro
         #fields=('relativa','temperatura')
-        fields = '__all__'
+        fields = ('planta', 'relativa', 'temperatura')

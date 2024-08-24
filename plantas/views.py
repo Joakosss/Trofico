@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.http.response import JsonResponse
-from . models import planta, registro, r_ambiente
+from . models import planta, registro
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as login_autent
 from django.contrib.auth.decorators import login_required
@@ -28,7 +28,7 @@ def get_grafico(request):
 
 
 class registroViewSet(viewsets.ModelViewSet):
-    queryset = r_ambiente.objects.all()
+    queryset = registro.objects.all()
     serializer_class = registroSerializer
 
 @login_required(login_url='/login')
