@@ -18,7 +18,9 @@ async function renderChart() {
                     labels: data.labels
                 },
                 y: {
-                    type: 'linear'
+                    type: 'linear',
+                    min:0,
+                    max:100,
                 }
             }
         }
