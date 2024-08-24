@@ -18,6 +18,8 @@ class planta (models.Model):
 class registro (models.Model):
     planta =models.ForeignKey(planta, on_delete=models.CASCADE)
     humedad =models.IntegerField()
+    relativa = models.IntegerField()
+    temperatura = models.IntegerField()
     fecha =models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
