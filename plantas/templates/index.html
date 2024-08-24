@@ -11,75 +11,47 @@
 
     {% block content %}
 
-{% comment %}     
-    <section class="container">
-        <article class="caja ">
-            <header class="" style="background-image: url('{% static 'img/planta.webp' %}');">
-                <h2>{{ x.nombre }}</h1>
-            </header>
-        </article>
-    </section>
- {% endcomment %}
-
-
-
-
-    <div class="container">
-        {% for x in plantas %}
-
-        <article class="card" style="width: 18rem;">
-            <div class="article-planta">
-                <img class="card-img-top" src="{% static 'img/planta.webp' %}" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">{{ x.nombre }}</h5>
-                  <p class="card-text">{{x.ubicacion}}</p>
+    <div>
+        <section class="container" >
+            {% for x in plantas %}
+            <article class="row bg-body mt-5" style="min-height: 730px;">
+                <section class="col-4 ">
+                    <img class="card-img-top" src="{% static 'img/planta.webp' %}" alt="Card image cap">
+                    <hr>
+                    <h5 class="card-title">{{ x.nombre }}</h5>
+                    <p class="card-text">{{x.ubicacion}}</p>
                     {% if bool %}
-                        <p>Falta riego</p>
+                    <p>Falta riego</p>
                     {% else %}
-                        <p>No necesita riego c:</p>
+                    <div class="row">
+                        <div class="col-10">
+                            <p>No necesito riego c:</p>
+                        </div>
+                        <div class="col-2">
+                            <img src="{% static 'img/smile.svg' %}" alt="" style="width: 50px;">
+                        </div>
+                    </div>
                     {% endif %}
                     <hr>
-                  <p class="card-text"> <strong>Humedad:</strong> {{datos2}}% </p>
-                    
-                </div>
-            </div>
-            <div class="article-planta">
-                <ul class="list-group list-group-flush">
-                {% for i in registros|slice:"-1:" %}
-                {% if i.planta_id == x.id %}
-                  <li class="list-group-item">{{i.fecha}} {{i.humedad}}%</li>
-                {% endif %}
-                {% endfor %}
-                </ul>
-            </div>
-            <div class="article-planta">
-                {% comment %} Aqui va el gráfico {% endcomment %}
-            </div>
-        </article>
-
-        
-        {% comment %} 
-        <article class="caja shadow p-3 mb-5 bg-body rounded-3">
-            <header class="pb-5" style="background-image: url('{% static 'img/planta.webp' %}');">
-                <h2>{{ x.nombre }}</h1>
-            </header>
-            <h3>Descripcion:</h3>
-            <p>{{x.descripcion}}</p>
-            <h3>Ubicación: {{x.ubicacion}}</h3>
-            <h3>Historial:</h3>
-                {% for i in registros|slice:"0:6" %}
-                    {% if i.planta_id == x.id %}
-                    <p>Fecha: {{i.fecha}}</p>
-                    <p>Humedad: {{i.humedad}}</p>
-                    {% endif %}
-                {% endfor %}
-            <button class="btn btn-secondary">Editar</button>
-
-        </article>
-{% endcomment %}
-        {% endfor %}
-    </div>
-    {% endblock content %}
-
-
+                    <p class="card-text"> <strong>Humedad:</strong> {{datos2}}% </p>
+                </section>
+                <section id="chart-container" class="col-8" style="width: 880px; height: 400px;">
+                    <canvas id="chart"></canvas>
+                    <hr>
+                    <h5>Registro de Humedad</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for i in registros%}
+                        {% if i.planta_id == x.id %}
+                        <li class="list-group-item">{{ i.fecha }} {{ i.humedad }}%</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </section>
+            </article>
+        </section>
+            {% endfor %}
+    </div>    
+        {% endblock content %}
+    
+    
 

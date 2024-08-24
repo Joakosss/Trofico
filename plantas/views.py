@@ -1,38 +1,36 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from . models import planta, registro
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as login_autent
 from django.contrib.auth.decorators import login_required
-import serial
 # Create your views here.
+
+
+def get_grafico(request):
+    registros = registro.objects.all().order_by('-fecha')[:7]
+    datos = {
+        'labels': ["Ultimas mediciones"," "," "," "," "," "," "],
+        'datasets': [{
+            'label': 'Humedad',
+            'data': [reg.humedad for reg in registros],
+            'borderColor': 'rgba(75, 192, 192, 1)',
+            'fill': False
+        }]
+    }
+    return JsonResponse(datos)
+
+    
 
 @login_required(login_url='/login')
 def index(request):
     plantas=planta.objects.all()
-    registros = registro.objects.all()
-    ser = serial.Serial("COM4", 9600)
-    datos = ser.readline().decode().strip()
-    datos2 = round(100-((int(datos)/1024)*100))
-    ser.close()
-
-    # Guardar en la base de datos
-    registro.objects.create(planta=planta.objects.get(id=15),
-                            humedad=datos2)
-
-    bool = False
-
-    if int(datos)> 1000:
-        bool = True
-
+    registros = registro.objects.all().order_by('-fecha')[:6]
 
     return render (request, 'index.html', {
         'plantas' : plantas,
         'registros' : registros,
-        'datos' : datos,
-        'datos2' : datos2,
-
-        'bool' : bool
     })
 
 def logout_vista(request):

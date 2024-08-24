@@ -7,17 +7,11 @@
 
 }
 
-.caja{
-    /* width: 15rem; */
-    height: 591px;
-    padding: 0rem !important;   
-    background-color: white;
-    
-}
 
 
 body{
     background-color: #E6E6DC;
+    
 }
 
 .letraBlanca{
@@ -39,7 +33,10 @@ body{
     background-color: white;
     border-radius: 10px;
 }
-.article-planta{
-    display: flex;
 
+
+
+.chart {
+    width: 100%;
+    min-height: 400px;
 }
