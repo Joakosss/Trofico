@@ -7,9 +7,24 @@ from django.contrib.auth import authenticate,logout,login as login_autent
 from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from .serializer import registroSerializer
-import serial
-# Create your views here.
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from .models import registro
+import json, requests, serial
 
+# Create your views here.
+@api_view(['POST'])
+def recibir_datos(request):
+    try:
+        data = json.loads(request.body)
+        serializer = registroSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except json.JSONDecodeError:
+        return Response({"error": "Datos JSON no válidos"}, status=status.HTTP_400_BAD_REQUEST)
 
 def get_grafico(request):
     registros = registro.objects.all().order_by('-fecha')[:7]
@@ -24,20 +39,46 @@ def get_grafico(request):
     }
     return JsonResponse(datos)
 
-    
-
-
 class registroViewSet(viewsets.ModelViewSet):
     queryset = registro.objects.all()
     serializer_class = registroSerializer
 
+def lectura_arduino():
+    ser = serial.Serial('COM4', 9600)
+
+    # URL del endpoint de API Django local
+    url = 'http://127.0.0.1:8000/api/recibir_datos/'
+
+    planta_id = 15
+    humedad = 65
+    c = 0
+
+    while c < 1:
+        line = ser.readline().decode('utf-8').strip()
+        try:
+            # Cargar los datos JSON recibidos
+            data = json.loads(line)
+            
+            data['planta'] = planta_id
+            data['humedad'] = humedad
+            
+            # Enviar los datos actualizados a la API
+            response = requests.post(url, json=data)
+            c += 1
+            print(f'Respuesta del servidor: {response.status_code} - {response.text}')
+        except json.JSONDecodeError:
+            print("Error: Datos JSON no válidos")
+        break
+
 @login_required(login_url='/login')
 def index(request):
+    lectura_arduino()
     plantas=planta.objects.all()
 
     registros = registro.objects.all().order_by('-fecha')[:6]
 
-    registros = registro.objects.all()
+    ultimo_registro = registro.objects.latest('fecha')
+
     """ser = serial.Serial("COM4", 9600)
     datos = ser.readline().decode().strip()
     datos2 = round(100-((int(datos)/1024)*100))
@@ -56,7 +97,7 @@ def index(request):
     return render (request, 'index.html', {
         'plantas' : plantas,
         'registros' : registros,
-        #'datos' : datos,
+        'ultimo_registro' : ultimo_registro,
         #'datos2' : datos2,
         #'bool' : bool
     })

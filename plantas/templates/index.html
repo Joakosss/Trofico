@@ -24,9 +24,9 @@
 
                 <section class="col-4 ">
                     <hr>
-                    <p class="card-text"> <strong>Humedad:</strong> {{datos2}}% </p>
-                    <p class="card-text"> <strong>Humedad Relativa:</strong> {{datos2}}% </p>
-                    <p class="card-text"> <strong>Temperatura:</strong> {{datos2}}% </p>
+                        <p class="card-text"> <strong>Humedad:</strong> {{ultimo_registro.humedad}}% </p>
+                        <p class="card-text"> <strong>Humedad Relativa:</strong> {{ultimo_registro.relativa|floatformat:0 }}% </p>
+                        <p class="card-text"> <strong>Temperatura:</strong> {{ultimo_registro.temperatura|floatformat:0 }} C° </p>
                     <hr>
                     <h5 class="card-title">{{ x.nombre }}</h5>
                     <p class="card-text">{{x.ubicacion}}</p>

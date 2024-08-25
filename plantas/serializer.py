@@ -4,5 +4,5 @@ from .models import registro
 class registroSerializer(serializers.ModelSerializer):
     class Meta:
         model= registro
-        #fields=('relativa','temperatura')
-        fields = ('planta', 'relativa', 'temperatura')
+        #fields = ('planta', 'relativa', 'temperatura')
+        fields= '__all__'
