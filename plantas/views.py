@@ -32,7 +32,7 @@ def get_grafico(request):
         'labels': ["Ultimas mediciones"," "," "," "," "," "," "],
         'datasets': [{
             'label': 'Humedad',
-            'data': [reg.humedad for reg in registros],
+            'data':[reg.humedad for reg in reversed(registros)],
             'borderColor': 'rgba(75, 192, 192, 1)',
             'fill': False
         }]
@@ -44,13 +44,12 @@ class registroViewSet(viewsets.ModelViewSet):
     serializer_class = registroSerializer
 
 def lectura_arduino():
-    ser = serial.Serial('COM4', 9600)
+    ser = serial.Serial('COM3', 9600)
 
     # URL del endpoint de API Django local
     url = 'http://127.0.0.1:8000/api/recibir_datos/'
 
-    planta_id = 15
-    humedad = 65
+    planta_id = 1
     c = 0
 
     while c < 1:
@@ -58,21 +57,46 @@ def lectura_arduino():
         try:
             # Cargar los datos JSON recibidos
             data = json.loads(line)
-            
+                
+            # Procesar datos de humedad 
+            if "humedad" in data:
+                datos = int(data['humedad'])
+                humedad = round(100 - ((datos / 1024) * 100))
+            else:
+                None
+
+            humedad_relativa = data.get('relativa')
+            temperatura = data.get('temperatura')
             data['planta'] = planta_id
-            data['humedad'] = humedad
             
+            datos_a_enviar = {
+                'planta' : planta_id,
+                'humedad' : humedad,
+                'relativa' : humedad_relativa,
+                'temperatura' : temperatura
+            }
+
             # Enviar los datos actualizados a la API
-            response = requests.post(url, json=data)
+            response = requests.post(url, json=datos_a_enviar)
             c += 1
             print(f'Respuesta del servidor: {response.status_code} - {response.text}')
         except json.JSONDecodeError:
             print("Error: Datos JSON no válidos")
         break
 
+def humedad_lectura():
+    ser = serial.Serial('COM3', 9600)
+    datos = ser.readline().decode().strip()
+    ser.close()
+    return round(100-((int(datos)/1024)*100))   
+    
 @login_required(login_url='/login')
 def index(request):
-    lectura_arduino()
+    try:
+        lectura_arduino()
+    except:
+        None
+
     plantas=planta.objects.all()
 
     registros = registro.objects.all().order_by('-fecha')[:6]

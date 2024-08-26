@@ -1,0 +1,12 @@
+{
+    "model": "plantas.planta",
+    "pk": 15,
+    "fields": {
+      "valorMin": 12,
+      "valorMax": 30,
+      "nombre": "Monstera",
+      "descripcion": "Planta pequeña",
+      "ubicacion": "Citt"
+    }
+  }
+  
