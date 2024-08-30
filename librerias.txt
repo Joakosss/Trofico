@@ -2,3 +2,4 @@ django
 pyserial 
 djangorestframework 
 requests
+celery
