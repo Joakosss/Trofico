@@ -15,12 +15,20 @@ async function renderChart() {
             scales: {
                 x: {
                     type: 'category',
-                    labels: data.labels
+                    labels: data.labels,
+                    title: {
+                        display: true,
+                        text: 'Registros'
+                    }
                 },
                 y: {
                     type: 'linear',
                     min:0,
                     max:100,
+                    title: {
+                        display: true,
+                        text: '% Humedad'
+                    }
                 }
             }
         }

@@ -29,7 +29,7 @@ def recibir_datos(request):
 def get_grafico(request):
     registros = registro.objects.all().order_by('-fecha')[:7]
     datos = {
-        'labels': ["Ultimas mediciones"," "," "," "," "," "," "],
+        'labels': [" "," "," "," "," "," "," "],
         'datasets': [{
             'label': 'Humedad',
             'data':[reg.humedad for reg in reversed(registros)],
