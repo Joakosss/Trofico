@@ -43,11 +43,11 @@ class registroViewSet(viewsets.ModelViewSet):
     queryset = registro.objects.all()
     serializer_class = registroSerializer
 
-def lectura_arduino():
+""" def lectura_arduino():
     ser = serial.Serial('COM3', 9600)
 
     # URL del endpoint de API Django local
-    url = 'http://127.0.0.1:8000/api/recibir_datos/'
+    url = 'https://trofico.onrender.com/api/recibir_datos/'
 
     planta_id = 1
     c = 0
@@ -82,7 +82,7 @@ def lectura_arduino():
             print(f'Respuesta del servidor: {response.status_code} - {response.text}')
         except json.JSONDecodeError:
             print("Error: Datos JSON no válidos")
-        break
+        break """
 
 def humedad_lectura():
     ser = serial.Serial('COM3', 9600)
@@ -92,10 +92,10 @@ def humedad_lectura():
     
 @login_required(login_url='/login')
 def index(request):
-    try:
+    """ try:
         lectura_arduino()
     except:
-        None
+        None """
 
     plantas=planta.objects.all()
 
