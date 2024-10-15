@@ -43,29 +43,17 @@ class registroViewSet(viewsets.ModelViewSet):
     queryset = registro.objects.all()
     serializer_class = registroSerializer
 
-def lectura_arduino():
-    ser = serial.Serial('COM3', 9600)
-
+def enviar_datos_a_api(data):
     # URL del endpoint de API Django
     url = 'https://trofico.onrender.com/api/recibir_datos/'
 
-    #planta_id = 1
-
-    while True:
-        line = ser.readline().decode('utf-8').strip()
-        try:
-            # Cargar los datos JSON recibidos
-            data = json.loads(line)
-
-            # Agregar ID de planta a los datos
-            #data['planta'] = planta_id
-            
-            # Enviar los datos actualizados a la API
-            response = requests.post(url, json=data)
-            print(f'Respuesta del servidor: {response.status_code} - {response.text}')
-        
-        except json.JSONDecodeError:
-            print("Error: Datos JSON no válidos")
+    try:
+        # Enviar los datos a la API
+        response = requests.post(url, json=data)
+        print(f'Respuesta del servidor: {response.status_code} - {response.text}')
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Error al enviar datos a la API: {e}")
 
 """ 
 def lectura_arduino():
