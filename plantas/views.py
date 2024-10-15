@@ -50,7 +50,17 @@ def enviar_datos_a_api(data):
     try:
         # Enviar los datos a la API
         response = requests.post(url, json=data)
-        print(f'Respuesta del servidor: {response.status_code} - {response.text}')
+
+        if response.status_code == 201:
+            print(f'Datos enviados correctamente: {response.json()}')
+        else:
+            print(f'Error en respuesta del servidor: {response.status_code} - {response.text}')
+    
+    except requests.exceptions.ConnectionError:
+        print("Error de conexión: No se pudo conectar al servidor.")
+    
+    except requests.exceptions.Timeout:
+        print("Error de tiempo de espera: El servidor tardó demasiado en responder.")
     
     except requests.exceptions.RequestException as e:
         print(f"Error al enviar datos a la API: {e}")
