@@ -12,6 +12,5 @@ urlpatterns = [
     path('agregar_planta',views.añadirPlanta, name='PLANTAS'),
     path('get_grafico/',views.get_grafico,name='get_grafico'),
     path('api/', include(router.urls)),
-    path('api/recibir_datos/', views.recibir_datos, name='recibir_datos'),
 
 ]

@@ -14,7 +14,11 @@ from .models import registro
 import json, requests, serial
 
 # Create your views here.
-@api_view(['POST'])
+class registroViewSet(viewsets.ModelViewSet):
+    queryset = registro.objects.all()
+    serializer_class = registroSerializer
+
+""" @api_view(['POST'])
 def recibir_datos(request):
     try:
         data = json.loads(request.body)
@@ -25,7 +29,7 @@ def recibir_datos(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except json.JSONDecodeError:
         return Response({"error": "Datos JSON no válidos"}, status=status.HTTP_400_BAD_REQUEST)
-
+ """
 def get_grafico(request):
     registros = registro.objects.all().order_by('-fecha')[:7]
     datos = {
